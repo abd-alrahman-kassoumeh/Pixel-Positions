@@ -8,37 +8,39 @@
             </div>
 
             <div>
-                <form action="/jobs/{{ $job->id }}/apply" method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
-                    @csrf
-                    <label class="cursor-pointer bg-blue-600 text-sm font-bold py-2 px-4 rounded transition duration-200 shadow-md flex items-center gap-2">
-                        <span>📎 Upload CV & Apply</span>
-                        <input type="file" name="cv" class="hidden" onchange="this.form.submit()">
-                    </label>
-                </form>
+                @auth
+                    <form action="/jobs/{{ $job->id }}/apply" method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
+                        @csrf
+                        <label class="cursor-pointer bg-blue-600 text-sm font-bold py-2 px-4 rounded transition duration-200 shadow-md flex items-center gap-2">
+                            <span>📎 Upload CV & Apply</span>
+                            <input type="file" name="cv" class="hidden" onchange="this.form.submit()">
+                        </label>
+                    </form>
 
-                @error('cv')
-                    <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
-                @enderror
+                    @error('cv')
+                        <p class="text-red-500 text-xs font-semibold mt-1">{{ $message }}</p>
+                    @enderror
 
-                @if (session('success'))
-                    <script>
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: "{{ session('success') }}",
-                            confirmButtonColor: '#2563eb'
-                        });
-                    </script>
-                @else
-                    <script>
-                        Swal.fire({
-                            icon: 'wrong',
-                            title: 'Wrong!',
-                            text: "Try again",
-                            confirmButtonColor: '#DC143C'
-                        });
-                    </script>
-                @endif
+                    @if (session('success'))
+                        <script>
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: "{{ session('success') }}",
+                                confirmButtonColor: '#2563eb'
+                            });
+                        </script>
+                    @else
+                        <script>
+                            Swal.fire({
+                                icon: 'wrong',
+                                title: 'Wrong!',
+                                text: "Try again",
+                                confirmButtonColor: '#DC143C'
+                            });
+                        </script>
+                    @endif
+                @endauth
             </div>
         </x-panel>
 

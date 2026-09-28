@@ -20,7 +20,7 @@ Route::get('/jobs/{job}/edit' , [JobController::class , 'edit'])
     ->can('edit' , 'job');
 Route::patch('/jobs/{job}' , [JobController::class , 'update']);
 Route::delete('/jobs/{job}' , [JobController::class , 'destroy']);
-Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob']);
+Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob'])->middleware('auth');
 
 Route::get('/search' , [SearchController::class , 'index']);
 
