@@ -50,7 +50,7 @@ class JobController extends Controller
      */
     public function store(StoreJobRequest $request)
     {
-        $attributes = $request->rules();
+        $attributes = $request->validated();
 
         $attributes['featured'] = $request->has('featured');
 
@@ -97,7 +97,7 @@ class JobController extends Controller
      */
     public function update(UpdateJobRequest $request , Job $job)
     {
-        $attributes = $request->rules();
+        $attributes = $request->validated();
 
         $attributes['featured'] = $request->has('featured');
 
@@ -121,7 +121,7 @@ class JobController extends Controller
             }
         }
 
-        return redirect('/jobs/all-posted');
+        return redirect('/all-posted');
     }
 
     /**
@@ -131,7 +131,7 @@ class JobController extends Controller
     {
         $job->delete();
 
-        return redirect('/jobs/all-posted');
+        return redirect('/all-posted');
     }
 
     public function applyToJob(Request $request , Job $job)

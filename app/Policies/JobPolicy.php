@@ -37,12 +37,12 @@ class JobPolicy
      */
     public function update(User $user, Job $job): bool
     {
-        return false;
+        return $job->employer->user->is($user);
     }
 
     public function edit(User $user, Job $job): bool
     {
-        return $job->employer->user->is($user);
+        return $this->update($user , $job);
     }
 
     /**
@@ -50,7 +50,7 @@ class JobPolicy
      */
     public function delete(User $user, Job $job): bool
     {
-        return false;
+        return $this->update($user , $job);
     }
 
     /**
