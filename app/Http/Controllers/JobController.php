@@ -48,17 +48,9 @@ class JobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreJobRequest $request)
     {
-        $attributes = $request->validate([
-            'title' => ['required'],
-            'salary' => ['required'],
-            'location' => ['required'],
-            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
-            'details' => ['required'],
-            'requirements' => ['required'],
-            'tags' => ['nullable'],
-        ]);
+        $attributes = $request->rules();
 
         $attributes['featured'] = $request->has('featured');
 
@@ -103,16 +95,9 @@ class JobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request , Job $job)
+    public function update(UpdateJobRequest $request , Job $job)
     {
-        $attributes = $request->validate([
-            'title' => ['required'],
-            'salary' => ['required'],
-            'location' => ['required'],
-            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
-            'url' => ['required', 'active_url'],
-            'tags' => ['nullable'],
-        ]);
+        $attributes = $request->rules();
 
         $attributes['featured'] = $request->has('featured');
 
