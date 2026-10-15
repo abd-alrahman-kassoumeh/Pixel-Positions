@@ -89,22 +89,7 @@ class JobController extends Controller
         $job->update(Arr::except($attributes , ['tags']));
         $job->tags()->detach();
 
-        if (empty($attributes['tags']) == false)
-        {
-            $uniquesTags = [];
-            foreach (explode(',' , $attributes['tags']) as $tag)
-            {
-                $cleanTag = trim($tag);
-
-                if ($cleanTag == '') continue;
-
-                if (isset($uniquesTags[$cleanTag]) == false)
-                {
-                    $uniquesTags[$cleanTag] = true;
-                    $job->tag($cleanTag);
-                }
-            }
-        }
+        $job->addTags($attributes , $job);
 
         return redirect('/all-posted');
     }
