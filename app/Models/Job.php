@@ -29,6 +29,26 @@ class Job extends Model
         $this->tags()->attach($tag);
     }
 
+    public function addTags(Array $attributes , Job $job)
+    {
+        if (empty($attributes['tags']) == false)
+        {
+            $uniquesTags = [];
+            foreach (explode(',' , $attributes['tags']) as $tag)
+            {
+                $cleanTag = trim($tag);
+
+                if ($cleanTag == '') continue;
+
+                if (isset($uniquesTags[$cleanTag]) == false)
+                {
+                    $uniquesTags[$cleanTag] = true;
+                    $job->tag($cleanTag);
+                }
+            }
+        }
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class);

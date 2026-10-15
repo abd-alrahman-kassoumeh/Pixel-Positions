@@ -56,22 +56,7 @@ class JobController extends Controller
 
         $job = Auth::user()->employer->jobs()->create(Arr::except($attributes , 'tags'));
 
-        if (empty($attributes['tags']) == false)
-        {
-            $uniquesTags = [];
-            foreach (explode(',' , $attributes['tags']) as $tag)
-            {
-                $cleanTag = trim($tag);
-
-                if ($cleanTag == '') continue;
-
-                if (isset($uniquesTags[$cleanTag]) == false)
-                {
-                    $uniquesTags[$cleanTag] = true;
-                    $job->tag($cleanTag);
-                }
-            }
-        }
+        Job::addTags($attributes , $job);
 
         return redirect('/');
     }
