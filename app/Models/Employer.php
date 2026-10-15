@@ -12,7 +12,11 @@ class Employer extends Model
     /** @use HasFactory<\Database\Factories\EmployerFactory> */
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'name',
+        'logo'
+    ];
 
     public function user()
     {
