@@ -56,7 +56,7 @@ class JobController extends Controller
 
         $job = Auth::user()->employer->jobs()->create(Arr::except($attributes , 'tags'));
 
-        Job::addTags($attributes , $job);
+        $job->addTags($attributes , $job);
 
         return redirect('/');
     }
