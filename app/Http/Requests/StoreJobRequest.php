@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\JobSchedule;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -27,7 +28,7 @@ class StoreJobRequest extends FormRequest
             'title' => ['required'],
             'salary' => ['required'],
             'location' => ['required'],
-            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+            'schedule' => ['required' , Rule::enum(JobSchedule::class)],
             'details' => ['required'],
             'requirements' => ['required'],
             'tags' => ['nullable'],

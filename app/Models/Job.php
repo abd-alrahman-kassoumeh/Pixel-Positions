@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\JobSchedule;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -57,5 +58,12 @@ class Job extends Model
     public function employer()
     {
         return $this->belongsTo(Employer::class);
+    }
+
+    public function casts()
+    {
+        return [
+            'schedule' => JobSchedule::class
+        ];
     }
 }
