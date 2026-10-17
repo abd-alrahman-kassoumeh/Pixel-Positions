@@ -21,20 +21,27 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->with(['employer' , 'tags'])->get()->groupBy('featured');
+        $jobs = Job::latest()->with(['employer' , 'tags'])->get();
+
+        [$featuredJobs , $regularJobs] = $jobs->partition('featured');
 
         return view('jobs.index' , [
-            'featuredJobs' => $jobs[1],
-            'jobs' => $jobs[0],
+            'jobs' => $regularJobs,
+            'featuredJobs' => $featuredJobs,
             'tags' => Tag::all()
         ]);
     }
 
     public function myJobs()
     {
-        $jobs = Auth::user()->employer->jobs()->get();
+        $jobs = Auth::user()->employer->jobs()->with('tags')->get();
 
-        return view('jobs.all-posted', ['jobs' => $jobs]);
+        $employer = Auth::user()->employer;
+
+        return view('jobs.all-posted' , [
+            'jobs' => $jobs,
+            'employer' => $employer
+        ]);
     }
 
     /**
