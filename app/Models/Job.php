@@ -30,7 +30,7 @@ class Job extends Model
         $this->tags()->attach($tag);
     }
 
-    public function addTags(Array $attributes , Job $job)
+    public function addTags(Array $attributes)
     {
         if (empty($attributes['tags']) == false)
         {
@@ -44,7 +44,7 @@ class Job extends Model
                 if (isset($uniquesTags[$cleanTag]) == false)
                 {
                     $uniquesTags[$cleanTag] = true;
-                    $job->tag($cleanTag);
+                    $this->tag($cleanTag);
                 }
             }
         }

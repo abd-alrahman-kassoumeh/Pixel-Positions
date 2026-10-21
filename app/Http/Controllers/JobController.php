@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
@@ -61,9 +62,11 @@ class JobController extends Controller
 
         $attributes['featured'] = $request->has('featured');
 
-        $job = Auth::user()->employer->jobs()->create(Arr::except($attributes , 'tags'));
+        DB::transaction(function () use ($attributes) {
+            $job = Auth::user()->employer->jobs()->create(Arr::except($attributes , 'tags'));
 
-        $job->addTags($attributes , $job);
+            $job->addTags($attributes);
+        });
 
         return redirect('/');
     }
@@ -93,10 +96,12 @@ class JobController extends Controller
 
         $attributes['featured'] = $request->has('featured');
 
-        $job->update(Arr::except($attributes , ['tags']));
-        $job->tags()->detach();
+        DB::transaction(function () use ($attributes , $job) {
+            $job->update(Arr::except($attributes , ['tags']));
+            $job->tags()->detach();
 
-        $job->addTags($attributes , $job);
+            $job->addTags($attributes);
+        });
 
         return redirect('/all-posted');
     }
