@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ApplyToJobRequest;
 use App\Models\Job;
 use App\Http\Requests\StoreJobRequest;
 use App\Http\Requests\UpdateJobRequest;
 use App\Mail\Apply;
+use App\Models\Application;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -101,6 +103,8 @@ class JobController extends Controller
             $job->tags()->detach();
 
             $job->addTags($attributes);
+
+            Application::where('job_id' , $job->id)->delete();
         });
 
         return redirect('/all-posted');
@@ -116,11 +120,9 @@ class JobController extends Controller
         return redirect('/all-posted');
     }
 
-    public function applyToJob(Request $request , Job $job)
+    public function applyToJob(ApplyToJobRequest $request , Job $job)
     {
-        $request->validate([
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        ]);
+        $request->validated();
 
         $path = $request->file('cv')->store('temporary_cvs' , 'local');
 

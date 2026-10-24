@@ -24,7 +24,9 @@ Route::patch('/jobs/{job}' , [JobController::class , 'update'])
 Route::delete('/jobs/{job}' , [JobController::class , 'destroy'])
     ->middleware('auth')
     ->can('delete' , 'job');
-Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob'])->middleware('auth');
+Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob'])
+    ->middleware('auth')
+    ->can('apply' , 'job');
 
 Route::get('/search' , [SearchController::class , 'index']);
 

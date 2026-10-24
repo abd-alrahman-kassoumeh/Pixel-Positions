@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Application;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -51,6 +52,23 @@ class JobPolicy
     public function delete(User $user, Job $job): bool
     {
         return $this->update($user , $job);
+    }
+
+    public function apply(User $user , Job $job)
+    {
+        $checkApply = $job->applications()
+            ->where('user_id' , $user->id)
+            ->where('job_id' , $job->id)
+            ->exists();
+
+        if ($checkApply == true) return false;
+
+        Application::create([
+            'user_id' => $user->id,
+            'job_id' => $job->id
+        ]);
+
+        return true;
     }
 
     /**

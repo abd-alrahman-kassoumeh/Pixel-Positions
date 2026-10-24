@@ -60,6 +60,11 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    public function applications()
+    {
+        return $this->hasMany(Application::class);
+    }
+
     public function casts()
     {
         return [
