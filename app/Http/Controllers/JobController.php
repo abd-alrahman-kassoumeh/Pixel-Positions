@@ -70,7 +70,7 @@ class JobController extends Controller
             $job->addTags($attributes);
         });
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 
     /**
@@ -107,7 +107,7 @@ class JobController extends Controller
 
         Application::where('job_id' , $job->id)->delete();
 
-        return redirect('/all-posted');
+        return redirect()->route('jobs.myJobs');
     }
 
     /**
@@ -117,7 +117,7 @@ class JobController extends Controller
     {
         $job->delete();
 
-        return redirect('/all-posted');
+        return redirect()->route('jobs.myJobs');
     }
 
     public function applyToJob(ApplyToJobRequest $request , Job $job)

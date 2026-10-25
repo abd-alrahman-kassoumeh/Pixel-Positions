@@ -9,12 +9,16 @@ use App\Http\Controllers\TagController;
 use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/' , [JobController::class , 'index']);
+Route::get('/' , [JobController::class , 'index'])->name('home');
 
 Route::get('/jobs/create' , [JobController::class , 'create']);
 Route::get('/jobs/{job}' , [JobController::class , 'show']);
-Route::post('/jobs' , [JobController::class , 'store'])->middleware('auth');
-Route::get('/all-posted' , [JobController::class , 'myJobs'])->middleware('auth');
+Route::post('/jobs' , [JobController::class , 'store'])
+    ->middleware('auth')
+    ->name('jobs.store');
+Route::get('/all-posted' , [JobController::class , 'myJobs'])
+    ->middleware('auth')
+    ->name('jobs.myJobs');
 Route::get('/jobs/{job}/edit' , [JobController::class , 'edit'])
     ->middleware('auth')
     ->can('edit' , 'job');

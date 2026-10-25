@@ -44,7 +44,7 @@ class SessionController extends Controller
 
         request()->session()->regenerate();
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 
     /**
@@ -80,6 +80,6 @@ class SessionController extends Controller
 
         Auth::logout();
 
-        return redirect('/');
+        return redirect()->route('home');
     }
 }
