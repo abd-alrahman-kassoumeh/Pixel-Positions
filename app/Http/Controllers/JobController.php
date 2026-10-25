@@ -103,9 +103,9 @@ class JobController extends Controller
             $job->tags()->detach();
 
             $job->addTags($attributes);
-
-            Application::where('job_id' , $job->id)->delete();
         });
+
+        Application::where('job_id' , $job->id)->delete();
 
         return redirect('/all-posted');
     }
