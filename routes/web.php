@@ -34,6 +34,8 @@ Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob'])
 
 Route::get('/search' , [SearchController::class , 'index']);
 
+Route::get('/recommended/{analysis}' , [CvRecommendationController::class , 'showResults'])->name('cv.recommended');
+
 Route::get('/tags/{tag:name}' , [TagController::class , 'index']);
 
 Route::middleware('guest')->group(function () {
@@ -49,5 +51,5 @@ Route::delete('/logout' , [SessionController::class , 'destroy'])->middleware('a
 
 Route::middleware('auth')->group(function () {
     Route::get('/upload' , [CvRecommendationController::class , 'create']);
-    Route::post('/upload' , [CvRecommendationController::class , 'store']);
+    Route::post('/upload' , [CvRecommendationController::class , 'store'])->name('cv.store');
 });
