@@ -9,13 +9,10 @@ use App\Http\Requests\UpdateJobRequest;
 use App\Mail\Apply;
 use App\Models\Application;
 use App\Models\Tag;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rule;
 
 class JobController extends Controller
 {
@@ -24,7 +21,7 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = Job::latest()->with(['employer' , 'tags'])->get();
+        $jobs = Job::latest()->withRelations()->get();
 
         [$featuredJobs , $regularJobs] = $jobs->partition('featured');
 

@@ -6,9 +6,6 @@ use App\Jobs\ProcessCvWithAi;
 use App\Models\CvAnalysis;
 use App\Models\Job;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Collection;
-use Smalot\PdfParser\Parser;
 
 class CvRecommendationController extends Controller
 {
