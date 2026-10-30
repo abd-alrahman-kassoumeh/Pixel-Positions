@@ -123,7 +123,7 @@ class JobController extends Controller
 
         $path = $request->file('cv')->store('temporary_cvs' , 'local');
 
-        Mail::to($job->employer->user)->queue(new Apply($job , $path));
+        Mail::to($job->employer->user)->queue(new Apply($job , $path , $request->user()));
 
         return back()->with('success' , 'Your application and CV have been submitted successfully!');
     }

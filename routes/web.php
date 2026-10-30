@@ -30,7 +30,8 @@ Route::delete('/jobs/{job}' , [JobController::class , 'destroy'])
     ->can('delete' , 'job');
 Route::post('/jobs/{job}/apply' , [JobController::class , 'applyToJob'])
     ->middleware('auth')
-    ->can('apply' , 'job');
+    ->can('apply' , 'job')
+    ->name('job.apply');
 
 Route::get('/search' , [SearchController::class , 'index']);
 

@@ -20,13 +20,16 @@ class Apply extends Mailable
     public string $cvPath;
     public Job $job;
 
+    public User $applicant;
+
     /**
      * Create a new message instance.
      */
-    public function __construct(Job $job , string $cvPath)
+    public function __construct(Job $job , string $cvPath , User $applicant)
     {
         $this->cvPath = $cvPath;
         $this->job = $job;
+        $this->applicant = $applicant;
     }
 
     /**
@@ -37,7 +40,7 @@ class Apply extends Mailable
         return new Envelope(
             subject: 'New Job Application for ' . $this->job->title,
             replyTo: [
-            new Address($this->job->employer->user->email , $this->job->employer->name),
+                new Address($this->applicant->email , $this->applicant->name)
             ],
         );
     }
