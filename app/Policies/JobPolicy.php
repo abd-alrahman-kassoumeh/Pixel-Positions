@@ -63,11 +63,6 @@ class JobPolicy
 
         if ($checkApply == true) return false;
 
-        Application::create([
-            'user_id' => $user->id,
-            'job_id' => $job->id
-        ]);
-
         return true;
     }
 

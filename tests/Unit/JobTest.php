@@ -45,7 +45,7 @@ it('prevents unauthorized users from updating another users job' , function () {
     expect($job->fresh()->title)->toBe('Test Title');
 });
 
-it('processes job application using fakes', function() {
+it('processes job application using fakes' , function() {
     Storage::fake('local');
 
     $cv = UploadedFile::fake()->create('testCv.pdf' , 100);
